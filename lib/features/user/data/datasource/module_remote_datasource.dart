@@ -14,7 +14,6 @@ class ModuleRemoteDataSource {
 
       return modules;
     } catch (e) {
-      print("module source error: $e");
       rethrow;
     }
   }

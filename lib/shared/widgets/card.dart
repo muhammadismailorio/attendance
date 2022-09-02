@@ -23,10 +23,12 @@ class HomeCard extends StatelessWidget {
     onTap() {
       if (isDisabled) return;
       if (routeTo != null) {
+        print(route);
         Navigator.push(
             context,
             routeTo ??
                 MaterialPageRoute(builder: (context) => const HomeScreen()));
+        return;
       } else {
         Navigate.to(context, route);
       }
@@ -51,11 +53,13 @@ class HomeCard extends StatelessWidget {
               child: SvgPicture.asset(
                 img,
                 width: 60.0,
+                height: 60.0,
               ),
             ),
             const SizedBox(height: 10),
             Text(
               title,
+              textAlign: TextAlign.center,
               style: isDisabled ? const TextStyle(color: Colors.grey) : null,
             ),
           ],

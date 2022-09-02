@@ -15,13 +15,12 @@ class _BodyState extends State<Body> {
 
   void _onSubmit(VoidCallback onSuccess) async {
     final form = _formKey.currentState;
-    UserStatus status = context.read<UserCubit>().state.status;
 
     if (form!.validate()) {
       FocusManager.instance.primaryFocus?.unfocus();
       if (_idController.text != '') {
         await context.read<UserCubit>().login(_idController.text);
-        if (status == UserStatus.error) {
+        if (context.read<UserCubit>().state.status == UserStatus.error) {
           _idController.clear();
           showDialog(
             context: context,

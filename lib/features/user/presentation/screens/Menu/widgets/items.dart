@@ -1,4 +1,3 @@
-
 import 'package:blueex_emp_app_flutter/shared/widgets/card.dart';
 import 'package:blueex_emp_app_flutter/features/user/presentation/screens/Menu/menu_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,21 +20,23 @@ class HomeItems extends StatelessWidget {
           ),
           itemCount: menu.length,
           itemBuilder: (context, index) {
-            String route = menu[index].subMenus.length == 0 ? menu[0].tag : '';
-            Route? routeTo = menu.length > 1
+            String route = menu[index].tag;
+
+            Route? routeTo = menu[index].subMenus.length > 1
                 ? MaterialPageRoute(
                     builder: (context) => MenuScreen(
                       menu: menu[index].subMenus,
                     ),
                   )
                 : null;
+
             return GridTile(
               child: HomeCard(
                 img: menu[index].icon,
                 title: menu[index].name,
                 route: route,
                 routeTo: routeTo,
-                isDisabled: true,
+                isDisabled: false,
               ),
             );
           }),

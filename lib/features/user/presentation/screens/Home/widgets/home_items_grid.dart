@@ -36,7 +36,7 @@ class HomeItemsGrid extends StatelessWidget {
                 : null;
             return GridTile(
               child: HomeCard(
-                img: 'assets/user/menu/${module.icon}',
+                img: 'assets/icons/user/menu/${module.icon}',
                 title: module.name,
                 route: route,
                 routeTo: routeTo,

@@ -1,10 +1,10 @@
 import 'package:blueex_emp_app_flutter/features/user/presentation/cubits/slider/slider_cubit.dart';
 import 'package:blueex_emp_app_flutter/resources/colors.dart';
+import 'package:blueex_emp_app_flutter/resources/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Carousal extends StatefulWidget {
@@ -41,8 +41,7 @@ class _CarousalState extends State<Carousal> {
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     child: CachedNetworkImage(
-                      imageUrl:
-                          '${dotenv.env['HOST']}public/sliders/${i.toString()}',
+                      imageUrl: '${kHost}public/sliders/${i.toString()}',
 
                       // 'http://api.blue-ex.com:5000/public/sliders/banner.jpeg',
                     ),

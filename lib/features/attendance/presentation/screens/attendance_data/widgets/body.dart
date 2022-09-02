@@ -36,7 +36,7 @@ class Body extends HookWidget {
           ),
         ),
         const MonthListView(),
-        const MyTable(),
+        const SingleChildScrollView(child: MyTable()),
       ],
     );
   }

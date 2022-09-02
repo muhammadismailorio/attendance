@@ -1,6 +1,6 @@
+import 'package:blueex_emp_app_flutter/resources/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class NetworkHelper {
   static Future request({
@@ -14,7 +14,7 @@ class NetworkHelper {
     if (method == 'POST') {
       headers['Content-Type'] = 'application/json';
     }
-    var request = http.Request(method, Uri.parse('${dotenv.env['HOST']}$url'));
+    var request = http.Request(method, Uri.parse('$kHost$url'));
     request.body = jsonEncode(data);
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
@@ -24,8 +24,10 @@ class NetworkHelper {
     });
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      print("Network success");
       return res;
     } else {
+      print("Network error");
       throw Exception(res['message']);
     }
   }

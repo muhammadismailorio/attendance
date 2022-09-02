@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:blueex_emp_app_flutter/features/user/presentation/screens/Home/home_screen.dart';
-import 'package:blueex_emp_app_flutter/features/user/presentation/screens/Login/login_screen.dart';
-import 'package:blueex_emp_app_flutter/features/user/presentation/screens/Otp/otp_screen.dart';
-import 'package:blueex_emp_app_flutter/features/user/presentation/screens/Splash/splash_screen.dart';
+import 'package:blueex_emp_app_flutter/features/user/presentation/screens/home/home_screen.dart';
+import 'package:blueex_emp_app_flutter/features/user/presentation/screens/login/login_screen.dart';
+import 'package:blueex_emp_app_flutter/features/user/presentation/screens/otp/otp_screen.dart';
+import 'package:blueex_emp_app_flutter/features/user/presentation/screens/splash/splash_screen.dart';
 
 class UserRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
