@@ -105,32 +105,32 @@ class Body extends StatelessWidget {
         HomeItemsGrid(),
         // Rider demo
 
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: GridView.builder(
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 4 / 3,
-              ),
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return GridTile(
-                  child: HomeCard(
-                    img: 'assets/icons/user/menu/rider.svg',
-                    title: 'Rider',
-                    route: '',
-                    routeTo: MaterialPageRoute(
-                      builder: (context) => MenuScreen(
-                        menu: menu,
-                      ),
-                    ),
-                    isDisabled: false,
-                  ),
-                );
-              }),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.all(10.0),
+        //   child: GridView.builder(
+        //       shrinkWrap: true,
+        //       physics: const ScrollPhysics(),
+        //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //         crossAxisCount: 2,
+        //         childAspectRatio: 4 / 3,
+        //       ),
+        //       itemCount: 1,
+        //       itemBuilder: (context, index) {
+        //         return GridTile(
+        //           child: HomeCard(
+        //             img: 'assets/icons/user/menu/rider.svg',
+        //             title: 'Rider',
+        //             route: '',
+        //             routeTo: MaterialPageRoute(
+        //               builder: (context) => MenuScreen(
+        //                 menu: menu,
+        //               ),
+        //             ),
+        //             isDisabled: false,
+        //           ),
+        //         );
+        //       }),
+        // ),
       ],
     );
   }

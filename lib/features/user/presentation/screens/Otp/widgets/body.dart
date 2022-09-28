@@ -15,6 +15,7 @@ class Body extends HookWidget {
     Size size = MediaQuery.of(context).size;
     String phone = context.read<UserCubit>().state.user.phone;
     String token = context.read<UserCubit>().state.user.token;
+    final isMounted = useIsMounted();
 
     void fetchStations() async {
       await context.read<StationCubit>().get(token);
@@ -28,12 +29,32 @@ class Body extends HookWidget {
       await context.read<ModuleCubit>().get(token);
     }
 
+    String comingSms = 'Unknown';
+
+    Future<void> initSmsListener() async {
+      String comingSms;
+      try {
+        comingSms = await AltSmsAutofill().listenForSms ?? '';
+      } on PlatformException {
+        comingSms = 'Failed to get Sms.';
+      }
+      if (!isMounted()) return;
+
+      comingSms = comingSms;
+      print("====>Message: $comingSms");
+
+      _digit1Controller.text = comingSms[0];
+      _digit2Controller.text = comingSms[1];
+      _digit3Controller.text = comingSms[2];
+      _digit4Controller.text = comingSms[3];
+    }
+
     useEffect(() {
       fetchStations();
       fetchSlider();
       fetchModule();
-
-      return null;
+      initSmsListener();
+      return () => AltSmsAutofill().unregisterListener();
     }, []);
 
     void onSuccess() => Navigate.next(context, HomeScreen.id);
