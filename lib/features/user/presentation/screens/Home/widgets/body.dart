@@ -99,7 +99,7 @@ class Body extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: const [
         Hi(),
         Carousal(),
         HomeItemsGrid(),
