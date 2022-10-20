@@ -12,4 +12,4 @@ class ServerFailure extends Failure {
   ServerFailure(this.message);
 }
 
-class CacheFailure extends Failure {}
+
