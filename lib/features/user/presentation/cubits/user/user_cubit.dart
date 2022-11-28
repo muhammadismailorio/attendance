@@ -7,6 +7,7 @@ import 'package:blueex_emp_app_flutter/features/user/domain/entity/user_entity.d
 import 'package:blueex_emp_app_flutter/features/user/domain/usecase/login_usecase.dart';
 import 'package:blueex_emp_app_flutter/shared/error/failures.dart';
 import 'package:blueex_emp_app_flutter/shared/params/user_params.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'user_state.dart';
 
@@ -19,6 +20,7 @@ class UserCubit extends Cubit<UserState> with HydratedMixin {
 
   Future<void> login(String empId) async {
     emit(state.copyWith(status: UserStatus.loading));
+    
 
     Either<Failure, User> user =
         await loginUseCase.call(UserParams(empId: empId));
@@ -35,6 +37,7 @@ class UserCubit extends Cubit<UserState> with HydratedMixin {
           user: user,
           isOtpVerified: false,
         ));
+        
       },
     );
   }

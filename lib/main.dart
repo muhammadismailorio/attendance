@@ -1,22 +1,31 @@
 import 'package:blueex_emp_app_flutter/background_service.dart';
-import 'package:blueex_emp_app_flutter/features/attendance/data/hive/station_data_model.dart';
+import 'package:blueex_emp_app_flutter/resources/db.dart';
+import 'package:blueex_emp_app_flutter/resources/db_background.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:blueex_emp_app_flutter/app.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:get_it/get_it.dart';
+
+import 'package:drift/isolate.dart';
+
+GetIt getIt = GetIt.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Hive.initFlutter();
+  final dir = await getApplicationDocumentsDirectory();
 
-  Hive.registerAdapter(StationDataModelAdapter());
+  final isolate = await DriftIsolate.spawn(backgroundConnection);
+  final connection = await isolate.connect();
+  final db = MyDatabase.connect(connection);
+
+  GetIt.I.registerSingleton<MyDatabase>(db, signalsReady: true);
 
   final storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
+    storageDirectory: dir,
   );
 
   await initializeService();

@@ -1,3 +1,4 @@
+import 'package:blueex_emp_app_flutter/features/attendance/domain/usecase/create_notification_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blueex_emp_app_flutter/features/attendance/data/datasource/attendance_data_remote_datasource.dart';
 import 'package:blueex_emp_app_flutter/features/attendance/data/datasource/station_remote_datasource.dart';
@@ -30,6 +31,14 @@ class AttendanceRepositoryProviders {
     // TodayAttendance
     RepositoryProvider<TodayAttendanceUseCase>(
       create: (context) => TodayAttendanceUseCase(
+        repository: AttendanceDataRepositoryImpl(
+            attendanceDataMapper: AttendanceDataMapper(),
+            attendanceDataRemoteDataSource: AttendanceDataRemoteDataSource()),
+      ),
+    ),
+    // Notification
+    RepositoryProvider<CreateNotificationUseCase>(
+      create: (context) => CreateNotificationUseCase(
         repository: AttendanceDataRepositoryImpl(
             attendanceDataMapper: AttendanceDataMapper(),
             attendanceDataRemoteDataSource: AttendanceDataRemoteDataSource()),

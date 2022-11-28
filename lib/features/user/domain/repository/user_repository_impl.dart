@@ -29,6 +29,7 @@ class UserRepositoryImpl extends UserRepository {
 
       User result = _mapper.mapModeltoEntity(userModel);
 
+
       return Right(result);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

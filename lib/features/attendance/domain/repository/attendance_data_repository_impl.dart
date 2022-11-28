@@ -49,4 +49,16 @@ class AttendanceDataRepositoryImpl extends AttendanceDataRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> createNotification(
+      {required String token, required String type}) async {
+    try {
+      bool result = await _remoteDataSource.createNotification(token, type);
+
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

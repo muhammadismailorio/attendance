@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:blueex_emp_app_flutter/boxes.dart';
-import 'package:blueex_emp_app_flutter/features/attendance/data/hive/station_data_model.dart';
+import 'package:blueex_emp_app_flutter/resources/db.dart';
+import 'package:blueex_emp_app_flutter/resources/db_background.dart';
+import 'package:drift/isolate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:blueex_emp_app_flutter/shared/location.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> initializeService() async {
   final service = FlutterBackgroundService();
@@ -103,17 +103,42 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  await Hive.initFlutter();
-  Hive.registerAdapter(StationDataModelAdapter());
+  bool isFound = false;
 
-  await Hive.openBox<StationDataModel>('stations');
+  final isolate = await DriftIsolate.spawn(backgroundConnection);
 
-  final box = Boxes.getStations();
+  final connection = await isolate.connect();
+
+  final db = MyDatabase.connect(connection);
+
+  // Stream<List<StationsEntityData>> stations =
+  //     db.select(db.stationsEntity).watch();
+
+  // Future<List<StationsEntityData>> printStream(
+  //     Stream<List<StationsEntityData>> stream) async {
+  //   List<StationsEntityData> myStations = [];
+  //   try {
+  //     await for (final stations in stream) {
+  //       // for (var element in stations) {
+  //       //   print("stations from $element");
+  //       // }
+  //       myStations = stations;
+  //     }
+  //     return myStations;
+  //   } catch (e) {
+  //     print("station error: $e");
+  //     return myStations;
+  //   }
+  //   // return sum;
+  // }
 
   // bring to foreground
   Timer.periodic(const Duration(seconds: 1), (timer) async {
     Position? position;
-    bool isFound;
+
+    // List<StationsEntityData> myStations = await printStream(stations);
+    // print("my stations $myStations");
+
     await determinePosition();
     await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
@@ -125,11 +150,19 @@ void onStart(ServiceInstance service) async {
     distanceInMeters = Geolocator.distanceBetween(
       position?.latitude ?? 0,
       position?.longitude ?? 0,
-      12234,
-      1234,
+      24.8691546,
+      67.0875276,
     );
 
     if (distanceInMeters <= 100) {
+      if (!isFound) {
+        // await CreateNotificationUseCase(
+        //   repository: AttendanceDataRepositoryImpl(
+        //     attendanceDataMapper: AttendanceDataMapper(),
+        //     attendanceDataRemoteDataSource: AttendanceDataRemoteDataSource(),
+        //   ),
+        // ).call(NotificationParams(token: token, type: 'check_in'));
+      }
       isFound = true;
     } else {
       isFound = false;
@@ -164,9 +197,6 @@ void onStart(ServiceInstance service) async {
 
     /// you can see this log in logcat
     print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
-    final person = box.getAt(0);
-    print(person?.latitude);
-    box.watch().listen((event) => print(event.value));
 
     service.invoke(
       'update',

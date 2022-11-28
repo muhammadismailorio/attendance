@@ -41,4 +41,22 @@ class AttendanceDataRemoteDataSource {
       rethrow;
     }
   }
+
+  Future<bool> createNotification(String token, String type) async {
+     Map<String, dynamic> data = {
+      "type": type,
+    };
+
+    try {
+      var res = await NetworkHelper.request(
+        method: "POST",
+        url: 'attendance-app/notification',
+        token: token,
+      );
+
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

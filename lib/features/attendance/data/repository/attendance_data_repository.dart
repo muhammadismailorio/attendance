@@ -8,4 +8,7 @@ abstract class AttendanceDataRepository {
 
   Future<Either<Failure, AttendanceData>> getTodayAttendance(
       {required String token});
+
+  Future<Either<Failure, bool>> createNotification(
+      {required String token, required String type});
 }
